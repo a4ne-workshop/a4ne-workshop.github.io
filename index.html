@@ -283,44 +283,6 @@
       line-height: 1.55;
     }
 
-    /* ── AGENDA ── */
-    .agenda-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
-    }
-    .agenda-table th {
-      text-align: left;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--muted);
-      padding: 0.75rem 1rem;
-      border-bottom: 2px solid var(--border);
-    }
-    .agenda-table td {
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-    .agenda-table tr:last-child td { border-bottom: none; }
-    .agenda-time {
-      font-weight: 600;
-      white-space: nowrap;
-      color: var(--ink);
-      min-width: 110px;
-    }
-    .agenda-title { font-weight: 600; }
-    .agenda-desc {
-      font-size: 0.88rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-    .agenda-break {
-      background: var(--highlight);
-    }
-
     /* ── SUBMISSION ── */
     .submission-box {
       background: var(--card-bg);
@@ -430,9 +392,6 @@
       .hero-meta { flex-direction: column; gap: 0.5rem; }
       section { padding: 2.5rem 1.25rem; }
       .committee-list { column-count: 1; }
-      .agenda-table { font-size: 0.88rem; }
-      .agenda-table th:first-child,
-      .agenda-table td:first-child { padding-left: 0.5rem; }
       .topics-grid { grid-template-columns: 1fr; }
     }
 
@@ -455,7 +414,6 @@
       <li><a href="#motivation">Overview</a></li>
       <li><a href="#cfp">Call for Papers</a></li>
       <li><a href="#dates">Dates</a></li>
-      <li><a href="#agenda">Agenda</a></li>
       <li><a href="#committee">Committee</a></li>
       <li><a href="#organizers">Organizers</a></li>
     </ul>
@@ -557,85 +515,6 @@
       <strong>Submission Format:</strong> Use ACM's LaTeX template with <code>\documentclass[sigconf, 10pt, anonymous]{acmart}</code>. Submissions are non-archival. Accepted papers will be discussed in themed panels led by Program Committee members.<br><br>
       <strong>Submission Link:</strong> HotCRP — link coming soon.
     </div>
-  </div>
-</section>
-
-<!-- AGENDA -->
-<section id="agenda">
-  <h2 class="section-title">Draft Agenda</h2>
-  <p class="section-lead">August 17, 2026 — Full-day hybrid workshop.</p>
-
-  <div style="overflow-x:auto;">
-    <table class="agenda-table">
-      <thead>
-        <tr><th>Time</th><th>Session</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="agenda-time">08:00 – 08:45</td>
-          <td>
-            <div class="agenda-title">Registration</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="agenda-time">08:45 – 09:00</td>
-          <td>
-            <div class="agenda-title">Welcome Address</div>
-            <div class="agenda-desc">Workshop Chairs</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="agenda-time">09:00 – 10:30</td>
-          <td>
-            <div class="agenda-title">Session 1: AI Integration &amp; Course Innovation</div>
-            <div class="agenda-desc">PC-led panel summarizing accepted papers + author presentations and discussion</div>
-          </td>
-        </tr>
-        <tr class="agenda-break">
-          <td class="agenda-time">10:30 – 11:00</td>
-          <td><div class="agenda-title">☕ Morning Coffee Break</div></td>
-        </tr>
-        <tr>
-          <td class="agenda-time">11:00 – 12:45</td>
-          <td>
-            <div class="agenda-title">Session 2: Labs, Pedagogies &amp; Open Materials</div>
-            <div class="agenda-desc">PC-led panel + interactive breakout discussions (hybrid breakout rooms)</div>
-          </td>
-        </tr>
-        <tr class="agenda-break">
-          <td class="agenda-time">12:45 – 14:00</td>
-          <td><div class="agenda-title">🍽️ Lunch Break</div></td>
-        </tr>
-        <tr>
-          <td class="agenda-time">14:00 – 15:45</td>
-          <td>
-            <div class="agenda-title">Session 3: Networking+X &amp; Broadening Access</div>
-            <div class="agenda-desc">PC-led panel + global perspectives (international PC members)</div>
-          </td>
-        </tr>
-        <tr class="agenda-break">
-          <td class="agenda-time">15:45 – 16:15</td>
-          <td><div class="agenda-title">☕ Afternoon Coffee Break</div></td>
-        </tr>
-        <tr>
-          <td class="agenda-time">16:15 – 17:30</td>
-          <td>
-            <div class="agenda-title">Panel: Future Directions for Networking Education</div>
-            <div class="agenda-desc">Invited panelists + community brainstorming on research directions and collaboration</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="agenda-time">17:30 – 18:00</td>
-          <td>
-            <div class="agenda-title">Closing &amp; Networking</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="submission-box" style="margin-top:1.75rem;">
-    <strong>Hybrid Format:</strong> All sessions will be live-streamed with integrated virtual Q&amp;A and breakout discussions. Pre-event 30-second participant intro videos and Slack community orientation will be provided. Interactive polls and timezone-friendly scheduling for global participants.
   </div>
 </section>
 
