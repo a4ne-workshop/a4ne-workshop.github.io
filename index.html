@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A4NE — Networking Education for the AI Generation | SIGCOMM 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1a2e;
+      --paper: #f7f5f0;
+      --accent: #c0392b;
+      --accent-light: #e74c3c;
+      --muted: #6b6b7b;
+      --border: #d5d0c8;
+      --card-bg: #ffffff;
+      --highlight: #fdf6e3;
+      --section-alt: #eeeae3;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.7;
+      font-size: 17px;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ink);
+      border-bottom: 3px solid var(--accent);
+    }
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+    .nav-brand {
+      font-family: 'DM Serif Display', serif;
+      color: #fff;
+      font-size: 1.15rem;
+      padding: 0.85rem 0;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.5rem 0.7rem;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 4rem 1.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(192,57,43,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(192,57,43,0.1) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 720px; margin: 0 auto; }
+    .hero-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--accent-light);
+      margin-bottom: 1rem;
+      border: 1px solid rgba(192,57,43,0.4);
+      padding: 0.35rem 1rem;
+      border-radius: 2px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.2;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent-light);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: #b0b0c0;
+      font-weight: 300;
+      max-width: 560px;
+      margin: 0 auto 2rem;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      font-size: 0.95rem;
+      color: #d0d0d8;
+    }
+    .hero-meta strong { color: #fff; font-weight: 600; }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 3.5rem 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    section.alt-bg {
+      max-width: 100%;
+      background: var(--section-alt);
+    }
+    section.alt-bg > .section-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.65rem;
+      margin-bottom: 0.35rem;
+      color: var(--ink);
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .section-lead {
+      color: var(--muted);
+      margin-top: 0.75rem;
+      margin-bottom: 1.75rem;
+      font-size: 1rem;
+      max-width: 640px;
+    }
+
+    /* ── DATES BANNER ── */
+    .dates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .date-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.25rem;
+      position: relative;
+    }
+    .date-card.highlight {
+      border-color: var(--accent);
+      background: var(--highlight);
+    }
+    .date-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .date-card.highlight .date-label { color: var(--accent); }
+    .date-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+
+    /* ── TOPICS ── */
+    .topics-list {
+      list-style: none;
+      margin-top: 1.5rem;
+      padding: 0;
+    }
+    .topics-list li {
+      position: relative;
+      padding: 0.5rem 0 0.5rem 1.4rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border-bottom: 1px solid var(--border);
+    }
+    .topics-list li:last-child { border-bottom: none; }
+    .topics-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.95rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .topics-list strong {
+      font-weight: 600;
+    }
+    .topics-list .topic-desc {
+      color: var(--muted);
+    }
+
+    /* ── TOPIC CARDS ── */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.35rem 1.25rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .topic-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .topic-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+    }
+    .topic-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── AGENDA ── */
+    .agenda-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .agenda-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .agenda-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .agenda-table tr:last-child td { border-bottom: none; }
+    .agenda-time {
+      font-weight: 600;
+      white-space: nowrap;
+      color: var(--ink);
+      min-width: 110px;
+    }
+    .agenda-title { font-weight: 600; }
+    .agenda-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .agenda-break {
+      background: var(--highlight);
+    }
+
+    /* ── SUBMISSION ── */
+    .submission-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .submission-box code {
+      background: var(--section-alt);
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.88rem;
+    }
+
+    /* ── COMMITTEE ── */
+    .committee-list {
+      column-count: 2;
+      column-gap: 2rem;
+      margin-top: 1.5rem;
+      list-style: none;
+    }
+    .committee-list li {
+      padding: 0.45rem 0;
+      break-inside: avoid;
+      font-size: 0.95rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .committee-list li:last-child { border-bottom: none; }
+    .committee-name { font-weight: 600; }
+    .committee-affil { color: var(--muted); font-size: 0.88rem; }
+
+    /* ── ORGANIZERS ── */
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .org-card {
+      text-align: center;
+      padding: 1.25rem 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .org-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+    }
+    .org-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .org-inst {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .org-email {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 0.3rem;
+      display: inline-block;
+    }
+    .org-email:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: #888;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--accent-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--ink);
+        padding: 0.5rem 1rem 1rem;
+        border-bottom: 3px solid var(--accent);
+      }
+      .nav-toggle { display: block; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .hero-meta { flex-direction: column; gap: 0.5rem; }
+      section { padding: 2.5rem 1.25rem; }
+      .committee-list { column-count: 1; }
+      .agenda-table { font-size: 0.88rem; }
+      .agenda-table th:first-child,
+      .agenda-table td:first-child { padding-left: 0.5rem; }
+      .topics-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .dates-grid { grid-template-columns: 1fr; }
+      .org-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand"><span>A4NE</span> @ SIGCOMM '26</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#motivation">Overview</a></li>
+      <li><a href="#cfp">Call for Papers</a></li>
+      <li><a href="#dates">Dates</a></li>
+      <li><a href="#agenda">Agenda</a></li>
+      <li><a href="#committee">Committee</a></li>
+      <li><a href="#organizers">Organizers</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-label">SIGCOMM 2026 Workshop</div>
+    <h1>Networking Education for the <em>AI Generation</em></h1>
+    <p class="hero-sub">Rethinking how we teach networking — integrating AI, broadening access, and forging interdisciplinary pathways for the next generation.</p>
+    <div class="hero-meta">
+      <div><strong>August 17, 2026</strong><br>Full-Day, Hybrid</div>
+      <div><strong>Co-located with</strong><br>ACM SIGCOMM 2026</div>
+      <div><strong>Format</strong><br>In-Person + Virtual</div>
+    </div>
+  </div>
+</header>
+
+<!-- IMPORTANT DATES -->
+<section id="dates">
+  <h2 class="section-title">Important Dates</h2>
+  <p class="section-lead">All deadlines are 23:59 AoE (Anywhere on Earth). Dates subject to coordination with SIGCOMM workshop chairs.</p>
+  <div class="dates-grid">
+    <div class="date-card highlight">
+      <div class="date-label">Submission Deadline</div>
+      <div class="date-value">June 1, 2026</div>
+    </div>
+    <div class="date-card">
+      <div class="date-label">Notification</div>
+      <div class="date-value">June 26, 2026</div>
+    </div>
+    <div class="date-card">
+      <div class="date-label">Camera-Ready</div>
+      <div class="date-value">July 1, 2026</div>
+    </div>
+    <div class="date-card highlight">
+      <div class="date-label">Workshop Date</div>
+      <div class="date-value">August 17, 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- MOTIVATION -->
+<section id="motivation">
+  <p style="margin-bottom:1rem; font-size: 1.05rem;">Networking education faces unprecedented opportunities for innovation. Generative AI is transforming pedagogy, yet educators need venues to share effective integration strategies. Cross-disciplinary "Networking+X" courses are emerging to serve both CS majors and students in policy, social sciences, and humanities. Hands-on labs increasingly leverage testbeds like FABRIC, while new pedagogies (flipped classrooms, interactive settings) reshape learning. Open educational resources can democratize access to quality materials.</p>
+  <p style="margin-bottom:0.25rem;">This workshop addresses these evolving needs by convening a global community to discuss:</p>
+  <div class="topics-grid">
+    <div class="topic-card">
+      <h3>AI Integration</h3>
+      <p>How AI tools — including LLMs, AI-driven lab assistants, and automated assessment systems — can scaffold learning, support assessment, and enhance labs without undermining essential skills.</p>
+    </div>
+    <div class="topic-card">
+      <h3>AI Ethics &amp; Integrity</h3>
+      <p>Designing assessments robust to AI use, ensuring fairness when students have uneven AI access, and teaching responsible AI practices.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Networking+X</h3>
+      <p>Cross-disciplinary courses connecting networking to policy, security, censorship, and societal issues for diverse student populations.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Labs &amp; Hands-on Learning</h3>
+      <p>Programmable testbed experimentation, real-world data access, practical experiences.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Teaching Pedagogies</h3>
+      <p>Flipped classrooms, interactive settings, and innovative instructional approaches.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Open Materials</h3>
+      <p>Textbooks, assignments, and curricular resources for community sharing.</p>
+    </div>
+    <div class="topic-card">
+      <h3>Course Innovation</h3>
+      <p>Modernizing both introductory and advanced networking courses to teach emerging topics (AI-native SDN, satellite networks, edge computing, etc).</p>
+    </div>
+  </div>
+</section>
+
+<!-- CALL FOR PAPERS -->
+<section class="alt-bg" id="cfp">
+  <div class="section-inner">
+    <h2 class="section-title">Call for Papers</h2>
+    <p class="section-lead">We solicit non-archival short papers (4–6 pages) and position papers on the following networking education topics.</p>
+
+    <ul class="topics-list">
+      <li><strong>AI Integration:</strong> <span class="topic-desc">Generative AI for progressive abstraction, assessment design, lab automation, and supporting student learning.</span></li>
+      <li><strong>Networking+X Courses:</strong> <span class="topic-desc">Cross-disciplinary approaches connecting networking to policy, security, censorship, and societal issues; courses for non-CS majors.</span></li>
+      <li><strong>Labs &amp; Hands-on Learning:</strong> <span class="topic-desc">FABRIC testbed experimentation, real-world data access, and practical networking experiences.</span></li>
+      <li><strong>Course Modernization:</strong> <span class="topic-desc">Redesigning introductory and advanced networking courses for contemporary topics.</span></li>
+      <li><strong>Teaching Pedagogies:</strong> <span class="topic-desc">Flipped classrooms, interactive settings, and innovative instructional approaches.</span></li>
+      <li><strong>Undergraduate Research Mentorship &amp; Pedagogy:</strong> <span class="topic-desc">Mentoring undergraduates in networking research; integrating research experiences into courses and labs.</span></li>
+      <li><strong>Assessment &amp; Evaluation:</strong> <span class="topic-desc">Evaluating learning outcomes, broadening participation, and measuring pedagogical effectiveness.</span></li>
+      <li><strong>Open Educational Resources:</strong> <span class="topic-desc">Textbooks, assignments, and curricular materials for community sharing.</span></li>
+    </ul>
+
+    <div class="submission-box">
+      <strong>Submission Format:</strong> Use ACM's LaTeX template with <code>\documentclass[sigconf, 10pt, anonymous]{acmart}</code>. Submissions are non-archival. Accepted papers will be discussed in themed panels led by Program Committee members.<br><br>
+      <strong>Submission Link:</strong> HotCRP — link coming soon.
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <h2 class="section-title">Draft Agenda</h2>
+  <p class="section-lead">August 17, 2026 — Full-day hybrid workshop.</p>
+
+  <div style="overflow-x:auto;">
+    <table class="agenda-table">
+      <thead>
+        <tr><th>Time</th><th>Session</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="agenda-time">08:00 – 08:45</td>
+          <td>
+            <div class="agenda-title">Registration</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="agenda-time">08:45 – 09:00</td>
+          <td>
+            <div class="agenda-title">Welcome Address</div>
+            <div class="agenda-desc">Workshop Chairs</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="agenda-time">09:00 – 10:30</td>
+          <td>
+            <div class="agenda-title">Session 1: AI Integration &amp; Course Innovation</div>
+            <div class="agenda-desc">PC-led panel summarizing accepted papers + author presentations and discussion</div>
+          </td>
+        </tr>
+        <tr class="agenda-break">
+          <td class="agenda-time">10:30 – 11:00</td>
+          <td><div class="agenda-title">☕ Morning Coffee Break</div></td>
+        </tr>
+        <tr>
+          <td class="agenda-time">11:00 – 12:45</td>
+          <td>
+            <div class="agenda-title">Session 2: Labs, Pedagogies &amp; Open Materials</div>
+            <div class="agenda-desc">PC-led panel + interactive breakout discussions (hybrid breakout rooms)</div>
+          </td>
+        </tr>
+        <tr class="agenda-break">
+          <td class="agenda-time">12:45 – 14:00</td>
+          <td><div class="agenda-title">🍽️ Lunch Break</div></td>
+        </tr>
+        <tr>
+          <td class="agenda-time">14:00 – 15:45</td>
+          <td>
+            <div class="agenda-title">Session 3: Networking+X &amp; Broadening Access</div>
+            <div class="agenda-desc">PC-led panel + global perspectives (international PC members)</div>
+          </td>
+        </tr>
+        <tr class="agenda-break">
+          <td class="agenda-time">15:45 – 16:15</td>
+          <td><div class="agenda-title">☕ Afternoon Coffee Break</div></td>
+        </tr>
+        <tr>
+          <td class="agenda-time">16:15 – 17:30</td>
+          <td>
+            <div class="agenda-title">Panel: Future Directions for Networking Education</div>
+            <div class="agenda-desc">Invited panelists + community brainstorming on research directions and collaboration</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="agenda-time">17:30 – 18:00</td>
+          <td>
+            <div class="agenda-title">Closing &amp; Networking</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="submission-box" style="margin-top:1.75rem;">
+    <strong>Hybrid Format:</strong> All sessions will be live-streamed with integrated virtual Q&amp;A and breakout discussions. Pre-event 30-second participant intro videos and Slack community orientation will be provided. Interactive polls and timezone-friendly scheduling for global participants.
+  </div>
+</section>
+
+<!-- PROGRAM COMMITTEE -->
+<section class="alt-bg" id="committee">
+  <div class="section-inner">
+    <h2 class="section-title">Program Committee</h2>
+    <p class="section-lead">Confirmed members from institutions worldwide.</p>
+    <ul class="committee-list">
+      <li><span class="committee-name">Jon Crowcroft</span><br><span class="committee-affil">University of Oxford, United Kingdom</span></li>
+      <li><span class="committee-name">Mallesham Dasari</span><br><span class="committee-affil">Northeastern University, U.S.A</span></li>
+      <li><span class="committee-name">Fraida Fund</span><br><span class="committee-affil">NYU Tandon School of Engineering, U.S.A</span></li>
+      <li><span class="committee-name">Cheikh A. B. Gueye</span><br><span class="committee-affil">Université Cheikh Anta Diop, Senegal</span></li>
+      <li><span class="committee-name">Sanjay Jha</span><br><span class="committee-affil">University of New South Wales, Australia</span></li>
+      <li><span class="committee-name">Dave Levin</span><br><span class="committee-affil">University of Maryland, U.S.A</span></li>
+      <li><span class="committee-name">Maïssa Mbaye</span><br><span class="committee-affil">Université Gaston Berger de Saint-Louis, Senegal</span></li>
+      <li><span class="committee-name">Vishal Misra</span><br><span class="committee-affil">Columbia University, U.S.A</span></li>
+      <li><span class="committee-name">Junaid Qadir</span><br><span class="committee-affil">Qatar University, Qatar</span></li>
+      <li><span class="committee-name">Nik Sultana</span><br><span class="committee-affil">Illinois Institute of Technology, U.S.A</span></li>
+      <li><span class="committee-name">Ram Sundara Raman</span><br><span class="committee-affil">UC Santa Cruz, U.S.A</span></li>
+      <li><span class="committee-name">Qiao Xiang</span><br><span class="committee-affil">Xiamen University, China</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ORGANIZERS -->
+<section id="organizers">
+  <h2 class="section-title">Organizers</h2>
+  <div class="org-grid">
+    <div class="org-card">
+      <div class="org-avatar">MC</div>
+      <div class="org-name">Matthew Caesar</div>
+      <div class="org-inst">University of Illinois</div>
+     
+    </div>
+    <div class="org-card">
+      <div class="org-avatar">VC</div>
+      <div class="org-name">Vasanta Chaganti</div>
+      <div class="org-inst">Swarthmore College</div>
+     
+    </div>
+    <div class="org-card">
+      <div class="org-avatar">JK</div>
+      <div class="org-name">James F. Kurose</div>
+      <div class="org-inst">University of Massachusetts Amherst</div>
+     
+    </div>
+    <div class="org-card">
+      <div class="org-avatar">RW</div>
+      <div class="org-name">Ranysha Ware</div>
+      <div class="org-inst">Swarthmore College</div>
