@@ -314,6 +314,51 @@
       font-size: 0.92rem;
     }
 
+    /* ── REGISTRATION ── */
+    .reg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .reg-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .reg-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+    .reg-card p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+    .reg-btn {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 4px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .reg-btn:hover,
+    .reg-btn:focus-visible {
+      background: #520bc4;
+      transform: translateY(-1px);
+    }
+
     /* ── COMMITTEE ── */
     .committee-list {
       column-count: 2;
@@ -428,6 +473,7 @@
       <li><a href="#motivation">Overview</a></li>
       <li><a href="#cfp">Call for Papers</a></li>
       <li><a href="#dates">Dates</a></li>
+      <li><a href="#registration">Registration</a></li>
       <li><a href="#committee">Committee</a></li>
       <li><a href="#organizers">Organizers</a></li>
     </ul>
@@ -468,6 +514,27 @@
     <div class="date-card highlight">
       <div class="date-label">Workshop Date</div>
       <div class="date-value">August 17, 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRATION -->
+<section class="alt-bg" id="registration">
+  <div class="section-inner">
+    <h2 class="section-title">Registration</h2>
+    <p class="section-lead">The workshop is hybrid. Choose the registration option that fits how you plan to attend. In-person registration is handled through ACM SIGCOMM 2026; virtual attendees can register separately to receive remote access details. Virtual registration is free.</p>
+    <div class="reg-grid">
+      <div class="reg-card">
+        <h3>In-Person</h3>
+        <p>Attend on-site, co-located with ACM SIGCOMM 2026. Registration is managed through the main SIGCOMM conference registration.</p>
+        <a class="reg-btn" href="https://conferences.sigcomm.org/sigcomm/2026/registration/" target="_blank" rel="noopener">Register In-Person</a>
+      </div>
+      <div class="reg-card">
+        <h3>Virtual</h3>
+        <p>Join remotely from anywhere. Virtual registration provides access to the livestream, session links, and asynchronous participation.</p>
+        <a class="reg-btn" href="https://forms.gle/zCG4FXjPGgVwJGY18
+" target="_blank" rel="noopener">Register Virtually</a>
+      </div>
     </div>
   </div>
 </section>
