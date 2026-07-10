@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accepted Papers — SIGCOMM Education Workshop 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f172a;
+      --paper: #ffffff;
+      --accent: #6610f2;
+      --accent-light: #e6c229;
+      --accent-red: #d11149;
+      --muted: #475569;
+      --border: #e2e8f0;
+      --card-bg: #f8fafc;
+      --highlight: #fef9ed;
+      --section-alt: #f1f5f9;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 133%; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.7;
+      font-size: 28px;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ink);
+      border-bottom: 3px solid var(--accent);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+    .nav-brand {
+      font-family: 'DM Serif Display', serif;
+      color: #fff;
+      font-size: 1.2rem;
+      padding: 0.85rem 0;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #d4d4d4;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.5rem 0.7rem;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #fff;
+      background: rgba(255,255,255,0.12);
+      outline: 2px solid var(--accent-light);
+      outline-offset: 2px;
+    }
+    .nav-links a.active { color: var(--accent-light); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 4rem 1.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(102,16,242,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(230,194,41,0.15) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 960px; margin: 0 auto; }
+    .hero-label {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--accent-light);
+      margin-bottom: 1rem;
+      border: 1px solid rgba(230,194,41,0.6);
+      padding: 0.35rem 1rem;
+      border-radius: 2px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 6.7vw, 3.2rem);
+      line-height: 1.2;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent-light);
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      color: #c4cfe8;
+      font-weight: 700;
+      max-width: 740px;
+      margin: 0 auto 2rem;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      font-size: 1.05rem;
+      color: #c8d8f0;
+    }
+    .hero-meta strong { color: #fff; font-weight: 600; }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 3.5rem clamp(1.5rem, 5vw, 4rem);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    section.alt-bg {
+      max-width: 100%;
+      background: var(--section-alt);
+    }
+    section.alt-bg > .section-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.35rem;
+      color: var(--ink);
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .section-lead {
+      color: var(--muted);
+      margin-top: 0.75rem;
+      margin-bottom: 1.75rem;
+      font-size: 1.1rem;
+      max-width: 800px;
+    }
+
+    /* ── FOCUS ── */
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ── PAPERS ── */
+    .paper-group-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-top: 2.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .papers-list {
+      list-style: none;
+      margin-top: 1.5rem;
+      padding: 0;
+      display: grid;
+      gap: 1rem;
+    }
+    .paper-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 1.4rem 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .paper-card:hover {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .paper-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+    }
+    .paper-title a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .paper-title a:hover { color: var(--accent); text-decoration: underline; }
+    .paper-authors {
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    .paper-authors .affil {
+      font-style: italic;
+    }
+    .paper-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      background: rgba(102,16,242,0.08);
+      padding: 0.15rem 0.6rem;
+      border-radius: 3px;
+      margin-bottom: 0.6rem;
+    }
+    .paper-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.9rem;
+    }
+    .paper-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      background: var(--paper);
+      padding: 0.3rem 0.85rem;
+      border-radius: 4px;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .paper-link:hover,
+    .paper-link:focus-visible {
+      border-color: var(--accent);
+      background: rgba(102,16,242,0.06);
+    }
+    .paper-link::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .paper-abstract { margin-top: 0.9rem; }
+    .paper-abstract summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      background: var(--paper);
+      padding: 0.3rem 0.85rem;
+      border-radius: 4px;
+      cursor: pointer;
+      width: fit-content;
+      list-style: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .paper-abstract summary::-webkit-details-marker { display: none; }
+    .paper-abstract summary::before {
+      content: '▸';
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+    }
+    .paper-abstract[open] summary::before { transform: rotate(90deg); }
+    .paper-abstract summary:hover,
+    .paper-abstract summary:focus-visible {
+      border-color: var(--accent);
+      background: rgba(102,16,242,0.06);
+    }
+    .paper-abstract-body {
+      margin-top: 0.8rem;
+      font-size: 0.98rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 900px;
+      white-space: pre-line;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: #94a3c8;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.95rem;
+    }
+    footer a { color: var(--accent-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--ink);
+        padding: 0.5rem 1rem 1rem;
+        border-bottom: 3px solid var(--accent);
+      }
+      .nav-toggle { display: block; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .hero-meta { flex-direction: column; gap: 0.5rem; }
+      section { padding: 2.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand"><span>A4NE</span> @ SIGCOMM '26</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html#motivation">Overview</a></li>
+      <li><a href="index.html#dates">Dates</a></li>
+      <li><a href="index.html#registration">Registration</a></li>
+      <li><a href="index.html#cfp">Call for Papers</a></li>
+      <li><a href="papers.html" class="active">Papers</a></li>
+      <li><a href="index.html#committee">Committee</a></li>
+      <li><a href="index.html#organizers">Organizers</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-label">SIGCOMM Education Workshop 2026</div>
+    <h1>Accepted <em>Papers</em></h1>
+    <p class="hero-sub">The papers accepted to the A4NE workshop, to be presented in themed panels on August 17, 2026.</p>
+  </div>
+</header>
+
+<!-- ACCEPTED PAPERS -->
+<section id="papers">
+  <h2 class="section-title">Accepted Papers</h2>
+  <p class="section-lead">Congratulations to the authors of the following accepted papers. Accepted papers are non-archival and will be discussed in themed panels led by Program Committee members.</p>
+
+  <ul class="papers-list">
+    <h3 class="paper-group-heading">Long Papers</h3>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">A course on responsible digital developments: a teaching experience report</div>
+      <div class="paper-authors">Daphne TUNCER <span class="affil">(Ecole nationale des ponts et chaussees, Institut Polytechnique de Paris)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper15.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">The paper presents a course that was developed in 2021 and that has been delivered since then on responsible digital developments. The course is built around the notion of responsibility. It aims to help students practice their critical-thinking skills with respect to the implications and consequences of digital developments. It consists of a taught lecture and a tutorial activity, and is driven by real-life examples taken from different sources, including the press, research projects and art work. The course is currently implemented in a format of either three or six hours, and is delivered in three university-level programs in the UK and in France.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">A First-Principles Framework for Networking Education</div>
+      <div class="paper-authors">Jaber Daneshamooz <span class="affil">(UCSB)</span>, Sanjay Chandrasekaran <span class="affil">(UCSB)</span>, Arpit Gupta <span class="affil">(UCSB)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper20.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Generative AI can now do many of the production tasks that traditional networking courses test, producing correct-sounding TCP walkthroughs or CSMA/CA traces in seconds. What remains difficult to automate is claim evaluation: recognizing when a confident-sounding claim about an unfamiliar system is wrong. We evaluate a first-principles framework designed to teach this skill. The framework consists of three components: four invariants (State, Time, Coordination, and Interface), the Environment-Measurement-Belief (E-M-B) decomposition, and binding-constraint cascade reasoning. We deployed the framework as the foundation of an upper-division networking course and surveyed students at the end of the term. Of the 54 students who consented to research use, 53 had previously completed the protocol-survey prerequisite at the same institution, allowing direct comparison between the two courses. Students reported substantially deeper understanding of why systems are designed as they are, which was the largest effect observed in the survey. They also reported being better able to analyze systems they had never encountered before. Most notably, more than a quarter described a specific instance in which they identified a plausible-but-incorrect claim, with several independently rejecting the same WiFi PHY-rate claim by citing fixed per-frame overhead. We also identify a limitation of the framework: students found it easier to decompose an existing system than to predict an architecture from a constraint, suggesting a direction for future refinement.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">A Lightweight JupyterHub Testbed on k3s for AI and Networking Education in Low-Resource settings: Experience from Senegal</div>
+      <div class="paper-authors">Faly GAYE <span class="affil">(UCAD)</span>, Bamba GUEYE <span class="affil">(UCAD)</span>, Ibrahima DIANE <span class="affil">(UCAD)</span>, Damien SAUCEZ <span class="affil">(INRIA)</span>, Nikos Makris <span class="affil">(University of Thessaly &amp; CERTH)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper11.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Limited infrastructure and equipment hinder hands-on AI and networking education in resource-constrained environments. In this paper, we present a lightweight, sustainable testbed based on 𝐽𝑢𝑝𝑦𝑡𝑒𝑟𝐻𝑢𝑏 deployed on a 𝑘3𝑠-managed edge/cloud continuum, designed to support practical training under low-bandwidth and intermittent connectivity conditions. The underlying 𝐵𝑙𝑢𝑒𝑝𝑟𝑖𝑛𝑡 leverages a heterogeneous, low-cost architecture optimized for smartphone access and minimal bandwidth consumption. Compared to traditional 𝐷𝑜𝑐𝑘𝑒𝑟 -based orchestration, our architecture significantly reduces 𝐶𝑃𝑈 usage by 93 % for 𝐾𝑒𝑦𝑐𝑙𝑜𝑎𝑘, 82 % for 𝑃𝑜𝑠𝑡𝑔𝑟𝑒𝑆𝑄𝐿, and 74 % for 𝑅𝑒𝑑𝑖𝑠 while maintaining reliable performance under constrained connectivity. Furthermore, the stack is replicable by any African university with modest hardware and connects natively to the SLICES-RI identity fabric via 𝐾𝑒𝑦𝑐𝑙𝑜𝑎𝑘 federation. These results highlight the potential of lightweight, cloud-native infrastructures to democratize access to advanced digital skills and support scalable, context-aware education in underserved regions.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Agentic AI for Accessibility Remediation in Learning Management Systems</div>
+      <div class="paper-authors">Ali Mazloum <span class="affil">(University of South Carolina)</span>, Jose Gomez <span class="affil">(Fort Lewis College)</span>, Elie Kfoury <span class="affil">(University of South Carolina)</span>, Jorge Crichigno <span class="affil">(University of South Carolina)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper6.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Networking instructors increasingly rely on Learning Management Systems (LMSs) to distribute slide decks, PDFs, lab handouts, and other course materials, yet remediating those artifacts for accessibility remains labor-intensive. This paper presents an agentic AI system that improves LMS-hosted networking courses through a four-phase workflow: course navigation, Ally-based assessment, document remediation, and re-upload. The design combines parallel document processing for throughput with a three-agent validation pattern for reliability. In an initial evaluation on three networking courses, the system improved Blackboard Ally scores from 73% to 95%, from 82% to 96%, and from 66% to 89%. On a representative course, it collected 92 documents, processed 513 candidate images, used up to 20 concurrent subordinate agents, and completed the semantic remediation stage in about 28 minutes, corresponding to an estimated 20x speedup over a single-worker baseline. The validator accepted 82 of 83 documents without manual intervention, while a byte- equality shortcut bypassed the validator for about one quarter of cases. These results suggest that agentic AI can provide practical instructional support for networking education, while exposing a central tradeoff: higher throughput and higher confidence require additional agent invocations and therefore higher operational cost.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">An Agentic AI Approach for Hands-on Networking Education</div>
+      <div class="paper-authors">Akhil Gorthi Bala Sai <span class="affil">(University of South Carolina)</span>, Ali Mazloum <span class="affil">(University of South Carolina)</span>, Jose Gomez <span class="affil">(Fort Lewis College)</span>, Samia Choueiri <span class="affil">(University of South Carolina)</span>, Amith GSPN <span class="affil">(University of South Carolina)</span>, Elie Kfoury <span class="affil">(University of South Carolina)</span>, Jorge Crichigno <span class="affil">(University of South Carolina)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper24.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Hands-on networking education relies on laboratories where learners configure networked systems, observe behavior, and debug failures. Virtual labs make this experience scalable, but support remains difficult because useful guidance often requires knowing both the intended procedure and the current state of a learner's environment. A lab manual describes the topology, setup steps, commands, and expected outputs, but it cannot inspect whether a learner has missed a step, configured the wrong interface, or produced an inconsistent routing state. General-purpose Large Language Models (LLMs) can explain networking concepts, but they are not grounded in a specific lab manual or in the live state of a running lab instance. They may also provide final commands too early, reducing the opportunity for learners to reason through the debugging process.
+
+This paper presents an agentic AI approach for hands-on networking education. The system is developed around an IPv6 configuration and routing training sequence, with a static-routing lab used as the running example, while the design targets virtual networking labs more broadly. The agent builds a lab-specific knowledge base from manuals and structured notes, uses Retrieval-Augmented Generation (RAG) to retrieve procedural and diagnostic context, and uses read-only live-state tools to inspect the learner's lab instance when an answer depends on current state. A human-audited evaluation over 100 lab-specific questions compares three conditions: LLM-only, document-only RAG, and the full agentic system. The full system answers 91 questions correctly and 9 partially, compared with 79 correct and 9 partial answers for document-only RAG and 34 correct and 17 partial answers for LLM-only. The results suggest that agentic AI can offer a promising direction for scalable support in hands-on networking education.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">An AI Orchestrator Model for Troubleshooting Skills Training in Network Engineering</div>
+      <div class="paper-authors">Kapil Mehta <span class="affil">(Cisco Systems)</span>, Prashant Sumanprasad Bhadoria <span class="affil">(Cisco Systems)</span>, Jaypal Baviskar <span class="affil">(Cisco Systems)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper31.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">When a network goes down or resiliencies are at stake, the pressure to restore the network to a business-as-usual state is immense. In that moment, engineers often fall into the trap of “solution-jumping” relying on quick fixes, such as reloads or using Generative AI to provide a quick fix rather than digging for the actual root cause. While these one-shot solutions might bring the network back to its desired state, they often fail to solve the underlying problem, which leads to repeat issues and a steady decline in customer trust. Our method looks at how we can better prepare network engineers for these high-pressure moments. Instead of relying just on traditional, theory-heavy training or only expertled trainings, we’ve blended a framework that focuses on cognitive conditioning.we propose the KTO-AI methodology (Kepner-Tregoe, Topology awareness, and OSI-layer mapping) with the 4E’s model (Education, Experience, Exposure, and Environment) in a simulated environment, we’re shifting the focus from speed to accuracy. The core of our approach is a mandatory, rigorous “Assess and Acquire” phase that must happen before any “Act” phase is permitted. We’ve validated this methodology with experts in the network troubleshooting domain, and the results were clear: when engineers receive real-time customer satisfaction scores (CSAT) and Question Credit feedback for each reasoning step, they stop guessing and start solving. To scale this cognitive conditioning, we propose an AI Agent Orchestrator as a design model to provide Experience, Exposure, and Environment. The orchestrator is intended to automate repetitive training functions: presenting failure scenarios, tracking Question Credit, recording CSAT trends, enforcing Assess/Acquire phase discipline, and providing structured feedback. This enables organizations to run continuous, personalized troubleshooting skills training at scale. We believe that by providing these safe spaces for practice regularly through AI orchestration, organizations can build the technical and psychological resilience their teams need to handle critical incidents effectively, ultimately leading to a more stable network and superior customer experience.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Bringing Research Infrastructure into the Networking Classroom at a Public Teaching College</div>
+      <div class="paper-authors">Ilknur Aydin <span class="affil">(Farmingdale State College)</span>, Fraida Fund <span class="affil">(New York University)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper17.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Public research testbeds make sophisticated networking and cloud computing capabilities available to educators and students at non-R1 and teaching-focused institutions without requiring those institutions to own or maintain the infrastructure. However, most reports on educational use of networking testbeds come from research-intensive institutions. This experience report instead examines adoption in a required undergraduate computer networking course at Anonymous Teaching College, a public teaching-focused institution where many students commute, work while enrolled, and have limited prior exposure to Linux command-line tools or research infrastructure. Since Fall 2022, one instructor has used public testbed-based labs across 16 course sections serving 373 students. We describe this experience and its outcomes, with a focus on the conditions that made adoption in this setting feasible: mentoring, reusable lab materials, instructor-created scaffolding, detailed student-facing instructions, and platform choices that reduce unproductive friction.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Crawl, Walk, Run: A Scaffolded Framework for AI Integration in Computing Education</div>
+      <div class="paper-authors">Ramakrishnan Durairajan <span class="affil">(University of Oregon and Link Oregon)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper19.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">AI is rapidly transforming computing practice, creating new challenges for educators across computing, systems, and networking disciplines. While unrestricted AI use can undermine conceptual learning, prohibiting AI risks disconnecting coursework from modern professional practice.
+
+This experience report presents a scaffolded framework for generative AI integration in computing education that balances foundational skill development with AI-assisted learning. With this framework, students progress through three stages: foundational skill development without AI assistance, structured AI-assisted pair programming, and AI-enabled project development where AI serves as a productivity multiplier. We describe the design rationale, implementation, and lessons learned from a pilot deployment of this framework. Our experience suggests that integrating AI into project-based coursework can help students develop critical awareness of AI’s limitations and the professional habits needed to evaluate AI-generated code. However, students frequently reported tension between the speed AI affords and the depth of understanding that coursework is designed to build.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Exploring Digital Twin Classroom: Extended Reality for Immersive Learning</div>
+      <div class="paper-authors">Chaowei Wang <span class="affil">(Beijing University of Posts and Telecommunications)</span>, Yunze Zhang <span class="affil">(Beijing University of Posts and Telecommunications)</span>, Wenyuan Wang <span class="affil">(Beijing University of Posts and Telecommunications)</span>, Lexi Xu <span class="affil">(Research Institute, China United Network Communications Corporation)</span>, Fan Jiang <span class="affil">(Xi'an University of Posts and Telecommunications)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper10.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">The development of new technologies has driven the transformation of teaching models. Extended Reality (XR) technologies, which bridge the gap between the virtual and the real world, have further evolved to incorporate digital twin and semantic technology within the immersive learning framework, creating innovative approaches for higher education. This paper formulates a Semantic-enhanced Immersive Digital Twin (SIDT) technology framework, introducing new, knowledge-driven concepts for teaching and curriculum design. The constructed system features high-fidelity interaction, cognitively-aware personalized learning, and remote distributed collaboration, encompassing the holistic design and optimization of educational objectives, teaching methods, learning environments, and instructional activities. In the teaching practice of the course \textit{Fundamentals of Wireless Communication Technology}, this model was applied to classroom instruction with the integration of innovative assessment methods to evaluate student learning outcomes. A comparative analysis between traditional teaching and digital twin–based immersive learning environments was conducted. The study provides exploratory practice and valuable insights into the application of digital twin technology in higher education.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Flipped Team-Based Learning and Labs for a Course on Computer Networking</div>
+      <div class="paper-authors">Thomas Zinner <span class="affil">(NTNU)</span>, Katrien De Moor <span class="affil">(NTNU)</span>, Stanislav Lange <span class="affil">(NTNU)</span>, David Palma <span class="affil">(Takinobori)</span>, Trond Vatten <span class="affil">(NTNU)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper18.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Introductory computer networking courses must help students move beyond memorizing protocols toward reasoning about packet-level behavior, configuration, and debugging. This experience report presents a flipped Team-Based Learning design that integrates weekly preparation, readiness assurance tests, team activities, and reproducible hands-on labs in a 13-week undergraduate networking course. We describe the course workflow, assessment model, and support structure, including an oral exam for individual accountability. Drawing on student feedback and teaching observations, we identify perceived strengths, operational trade-offs, and lessons for scaling active, lab-centered networking education in mid-sized cohorts.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Forty Years of Teaching Computer Networks: A Retrospective</div>
+      <div class="paper-authors">Shivendra Panwar <span class="affil">(New York University)</span>, Fraida Fund <span class="affil">(New York University)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper22.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">We present a forty-year retrospective on teaching computer networks, focusing on a graduate course in an Electrical and Computer Engineering department that evolved from a lecture-based course into a lab-intensive course centered on hands-on experimentation. Over this period, the Internet became the substrate for everyday computing, cloud services, mobile systems, security, and AI infrastructure. We describe how the course content has evolved, and why many core networking ideas have remained stable despite changes in the field. We then examine how course infrastructure changed and how the delivery of the course has improved as a result. Finally, we discuss how the student population, student motivation, and student engagement may have shifted as networking has become a core systems area rather than a specialized frontier. We close with reflections on the role of networking education in the generative AI era.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">From Module Consumers to Module Producers: A Mentored Summer Cohort for AI-Generation, Data-Driven Cybersecurity Education</div>
+      <div class="paper-authors">kc Claffy <span class="affil">(CAIDA/UC San Diego)</span>, Ricky K. P. Mok <span class="affil">(CAIDA/UC San Diego)</span>, Alexander Marder <span class="affil">(Johns Hopkins University)</span>, Bradley Huffaker <span class="affil">(CAIDA/UC San Diego)</span>, Rocky K. C. Chang <span class="affil">(Calvin University)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper26.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">For students, hands-on exposure to large-scale Internet mea-surement data is rare because the data are too big, too sen-sitive, and/or too operationally awkward to fit on a laptop. We describe the design of a ten-week mentored summer hy-brid program that treats course module production as both a research-mentorship experience and a curriculum pipeline. Participants are paired with measurement-community men-tors, and work on national cyberinfrastructure (the National Research Platform and SDSC Expanse) with real datasets (BGP, active topology, network telescope traffic). Our am-bitious goal is that each participant contributes to design-ing, implementing, and testing open-source teaching mod-ules that use real Internet measurement data, and gains first-hand experience of the AI-era data-science workflow we want future students to learn. The ten-week program ends with an in-person hackathon where modules are integrated, tested, and peer-reviewed before release as open educational resources. We position the design within a central tension of CS education—integrating AI so that it deepens rather than shortcuts learning—and report here as a work-in-progress. We describe the program’s motivation, the intended mod-ule catalog, the assessment infrastructure that makes the modules adoptable at scale, and invite discussion on how to maximize utility of the results for educational use.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">From Protocols-to-Prompts (P2P): Mapping the Agentification of Open Networking Education</div>
+      <div class="paper-authors">Venkat Sai Suman Lamba Karanam <span class="affil">(Bowling Green State University)</span>, Zahmeeth Sakkaff <span class="affil">(West Virginia Institute of Technology)</span>, Shubham Sundriyal <span class="affil">(Bowling Green State University)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper8.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">AI coding assistants and agentic software workflows since late-2022 have transformed how networking is taught, practiced, and learned. Formal curricula, however, have yet to address this transition. In this paper, we present a large-scale measurement study using 1,318 GitHub repositories to gauge how open networking education is evolving in the generative-AI era. The mined 1,318 GitHub repositories span the 2009–2026 period and are scored each along three axes, each measuring a pedagogical signal: (1) <strong>Conceptual Depth (CD)</strong> for protocol-level vocabulary density; (2) <strong>Operational Abstraction (OA)</strong> for orchestration and API-layer presence; and (3) <strong>Agent/Tool Dependence (ATD)</strong> for explicit AI framework instrumentation. We compare pre- and post-generative-AI artifacts using a November 2022 cutoff — at the dawn of ChatGPT release.
+
+Using extensive analysis we report the following findings. Within 208 repositories spanning the cutoff, we show a significant decline in mechanism-centric signals (ΔCD = −0.085, p &lt; 0.001) — with a concurrent and consistent rise in orchestration-layer indicators (ΔOA = +0.063, p = 0.008). Interestingly, ATD scores remain uniformly negligible across the entire corpus (mean ≈ 0.002) — a key finding that indicates that agentification is a shift in the tooling substrate rather than of explicit AI instrumentation.
+
+Additionally, our complementary analyses show that Docker adoption increased from 9.6% to 14.3% post-cutoff, GNS3 displaces Mininet as the dominant emulation tool (1.2% → 4.3%). From a problem-structure/activity perspective, we report that Parsons-style problems double in prevalence (1.2% → 2.5%). Networking and computing testbeds, specifically the NSF PAWR testbeds of FABRIC, COSMOS, POWDER, NRP remain largely absent from open educational repositories in both pre- and post-cutoff epochs. We manually validate our repository-level case studies across five spanning repositories to confirm that these aggregate findings (over 1,318 repos) match at the per-repository level. Finally, we present a taxonomy of pedagogical regimes and concrete recommendations for AI-aware networking curricula with the goal of preserving mechanistic understanding while embracing AI contemporary tooling.
+
+<strong>Reproducibility Commitment:</strong> All code, data, manual validation sample, and artifacts will be released upon publication.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Ludwig: Autonomous Multilingual Synthesis of Correct, Engaging Explainer Videos</div>
+      <div class="paper-authors">Alexander Krentsel <span class="affil">(UC Berkeley)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper3.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Building the right mental model is central to teaching and understanding systems. Well-animated explainer videos help build these mental models effectively, but are expensive and time-consuming to produce, requiring pedagogical design, scripting, animation, narration, and review work. We argue that recent capability shifts enable multi-modal models to effectively produce such content by autonomously authoring animation code from a style guide, auditing rendered frames for defects, and applying multilingual neural text-to-speech.
+
+We prototype an agent-driven system, Ludwig, structured around a highly capable producer agent that plans, narrates, and animates, and an independent vision-model reviewer that closes the loop by auditing the rendered output. Run for two months as a public channel, Ludwig has produced 150 videos across five languages with over 45,000 views at $2 to $10 and about 25 minutes of wall-clock time each, orders of magnitude below a human-authored equivalent. We discuss the implications of such a system for systems education. All videos are publicly available on the live channel at www.youtube.com/@ludwigexplains.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Networking Unplugged: Hands-On, Inquiry-Based Learning for Undergraduate Networking Courses</div>
+      <div class="paper-authors">Aaron Gember-Jacobson <span class="affil">(Colgate University)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper16.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">This paper presents a collection of hands-on, inquiry-based learning activities for introducing undergraduate students to important concepts in networking without using computers. Our _networking unplugged_ activities–inspired by the Computer Science (CS) Unplugged"approach of using kinesthetic-based puzzles and games to introduce CS concepts–frame important concepts in networking as physical communication tasks between humans. By brainstorming and experimenting with different ways of completing the tasks, students "discover" and compare important networking algorithms/protocols. Over the past decade, we have used these activities multiple times at different levels of the curriculum at a primarily undergraduate institution. Based on our informal observations, the activities have a positive impact on student engagement and understanding.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Open Source Networking Textbooks: A Clean Slate</div>
+      <div class="paper-authors">Bruce Davie <span class="affil">(Systems Approach)</span>, Larry Peterson <span class="affil">(Systems Approach)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper4.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">After three decades of producing networking textbooks, we observe that the Internet has changed enough to warrant a fresh approach to educating the next generation of students and practitioners. We propose a clean-slate refactoring of our networking textbook that aims to give students the necessary perspective to form a big-picture view of networking and the skills to deal with the complexity of modern networks. We treat networking as a set of system design problems and draw on existing artifacts such as Ethernet, HTTP and IP to illustrate how these challenges have been solved in the past, while aiming to equip readers with the perspective and systems thinking skills to shape the networks of the future.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Teaching Computer Networks by Building Networks: An Experiential Learning Approach Using Docker</div>
+      <div class="paper-authors">Ram Rustagi <span class="affil">(UMBC)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper23.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Most Computer Networking curricula at the undergraduate level aim to familiarize students with key networking tech-nologies and standards traditionally taught through a com-bination of lectures, analytical exercises, simulations, and packet trace analysis. These approaches help students deelop a basic understanding of inherently complex yet fundamen-tal concepts, such as, complexities of web communication, reliable delivery and packet forwarding in IP networks etc. Many students struggle to connect theoretical models with actual protocol behavior observed in real systems and often unable to translate their limited understanding into diagno-sis and action when troubleshooting networks. This paper presents a container-based experiential learning approach based on a four-stage pedagogical cycle: Prediction, Imple-mentation, Observation, and Explanation (PIOE). The frame-work uses Docker-based networking laboratory, in which routers, switches and end hosts are instantiated as docker containers. It enables students to experimentally validate protocol behavior across multiple layers of the networking stack. With the increasing adoption of generative AI in edu-cation, the framework emphasizes experiential learning by requiring students to relate conceptual understanding to the observed behavior of actual network implementations.
+
+We illustrate the framework using representative assign-ments covering Network Delay, TCP Flow Control, TCP Fairness, Longest Prefix Match based forwarding, IPv6 de-ployment and Layer-2 switching. Preliminary classroom ob-servations and feedback collected from our students confirm that these real time experiential activities improve student engagement and facilitate deeper understanding of network-ing concepts.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Teaching Wireless Networking in the Age of Software-ization and AI</div>
+      <div class="paper-authors">Serge Fdida <span class="affil">(Sorbonne Université)</span>, James Kurose <span class="affil">(University of Massachusetts)</span>, Akihiro NAKAO <span class="affil">(The University of Tokyo)</span>, Larry Peterson <span class="affil">(Systems Approach)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper13.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">IIn this paper, we describe the learning goals, course topics, and teaching experiences associated with a course on the principles and practice of modern wireless networks at the advanced undergraduate or master’s level, including the open educational resources we have developed for such a course. We emphasize 5G and Wi-Fi networks, but also include Bluetooth, IoT, and LEO satellite networking technologies. Unlike a wireless networking course that focuses on radio communication at the edge, our courses and materials focus on a softwareized (and programmable), full-stack mobile system that includes wireless access networks, as well as core networks, network control, management, and orchestration. While the radio access network (including the physical radio layer) is a critical part of any wireless network course, we also emphasize the levels of abstraction at which students can understand the radio channel and learn how it is programmed and managed, notably through concepts such as Radio Resource Blocks. We also address teaching challenges and opportunities in the age of AI that extend beyond wireless networking.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Think First, Code Later: Enhancing Student Reasoning and Learning in Practical Engineering Education through Guided Generative AI</div>
+      <div class="paper-authors">Musab Ahmed <span class="affil">(Hamburg University of Technology)</span>, Koojana Kuladinithi <span class="affil">(Hamburg University of Technology)</span>, Aliyu Makama <span class="affil">(Hamburg University of Technology)</span>, Frank Laue <span class="affil">(Hamburg University of Technology)</span>, Jonas Bozenhard <span class="affil">(Hamburg University of Technology)</span>, Maximilian Kiener <span class="affil">(Hamburg University of Technology)</span>, Andreas Timm-Giel <span class="affil">(Hamburg University of Technology, Germany)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper5.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">The use of Artificial Intelligence (AI) in education has triggered discussions ranging from redesigning courses around AI to restricting its use entirely. However, before fundamentally restructuring curricula, it is essential to establish how students can be trained to use AI effectively within existing courses to strengthen reasoning and critical thinking skills. This is particularly important in practical engineering education, where simulation plays a central role in enabling students to connect theoretical models with observable system behavior through experimentation and analysis. In such courses, generative AI offers new opportunities for personalized, dialogue-based support on demand, but its value depends on how it is pedagogically integrated. Our primary objective is to shift students from answer-seeking code generation toward a reasoning-first learning approach. To this end, this paper evaluates a Think-First workflow that restructures simulation exercises to emphasize problem formulation, result prediction, and pseudocode development prior to implementation. We examine students’ AI interaction patterns, simulation reasoning, and perceptions of the workflow in a master’s course on Simulation of Communication Networks.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Transport It Your Way: Rethinking Networking Projects to Emphasize Design</div>
+      <div class="paper-authors">Alexander Krentsel <span class="affil">(UC Berkeley)</span>, Tess Despres <span class="affil">(UC Berkeley)</span>, Sylvia Ratnasamy <span class="affil">(UC Berkeley)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper2.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">AI is quickly shifting what it means to be a computer scientist in networking. As coding agents become more capable, the day-to-day practices of building systems are quickly evolving. These shifts force us to reexamine how we teach networking, raising many open questions including: should syntax still be emphasized, how should we scaffold student coding assignments, and how should we assess what students have learned from artifacts? With these questions in mind, we focus on revamping an upper division networking and systems class project in this proposal. The previous project, which centers implementation, can now be completed end-to-end by a coding agent. To mitigate the impact of this reality, we propose a redesigned project that shifts effort towards system design and tradeoff analysis, while granting students the autonomy to use modern coding tools for their implementations. We also discuss how this approach could generalize to other projects in upper division systems classes.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Long Paper</span>
+      <div class="paper-title">Trust, but Verify: AI Interventions in Computer Networking Education</div>
+      <div class="paper-authors">Tanya Shreedhar <span class="affil">(TU Delft)</span>, Christoph Lofi <span class="affil">(TU Delft)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper14.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Generative AI assistants are now part of how undergraduates write and debug code, and computing education has moved from asking whether to allow them to asking how to teach with them. On networking tasks, those whose answers turn on the behavior of a running network the student can measure, these assistants are often fluent and wrong, and a beginner has no reliable way to tell. We call this failure mode vibe networking, accepting an AI artifact because it looks plausible, without checking whether it behaves as claimed. The networking course already holds the antidote, because its core method is measurement, the discipline’s way of settling a claim against the system itself. We propose that the course give a generative model three roles across the term, shifting as the student’s competence grows. At the start it is an adversary the student learns to catch by redoing its computation by hand, in the middle an assistant whose proposed experiments the student runs and measures on the live network, and at the end an examinee whose diagnosis the student confirms or refutes from a capture they take themselves. Measurement is the constant across the three roles: an observation the course produces in its normal run decides whether each AI answer holds, and the grade rewards the student’s check, never the model itself. We work out the three roles and design one classroom intervention for each, sized for a 9-week BSc course of around 500 students at TU Delft.</div>
+      </details>
+    </li>
+  </ul>
+  <h3 class="paper-group-heading">Short Papers</h3>
+  <ul class="papers-list">
+    <li class="paper-card">
+      <span class="paper-tag">Short Paper</span>
+      <div class="paper-title">Educating The Next Generation of Reviewers</div>
+      <div class="paper-authors">Bruce Davie <span class="affil">(Systems Approach)</span>, Matthew Caesar <span class="affil">(University of Illinois Urbana-Champaign)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper9.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">While our focus as educators is often on the technical education of students, there is also a need to educate the next generation of reviewers. Reviewing is often treated as a ``learn by experience'' activity, with service on program committees, or shadow PCs, being the main way that people learn how to write reviews. This position paper advocates for a focused effort, leveraging both shadow PCs and a new ``reviewer academy'' process, to teach the practice of paper reviewing. Our hope is that this will help to address one of the recognized pain points of our community. This paper is intended to stimulate discussion rather than to present a fully formed solution.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Short Paper</span>
+      <div class="paper-title">Grade the Learning, Not the Implementation: AI-Aware Assessment in Internet Measurements Education</div>
+      <div class="paper-authors">Oliver Hohlfeld <span class="affil">(University of Kassel)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper30.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Generative AI tools are reshaping what students can produce with modest programming effort. A graduate student can now obtain, process, and visualize a dataset in a fraction of the time it previously required. This shift creates a new opportunity for networking education, but it also exposes a fragility in how we assess learning: if grading focuses on implementations and written documentation, AI trivially satisfies those criteria without any understanding on the stu-dent’s part. We argue that this challenge is not a threat but a forcing function to re-focus on the learning objectives of a course. Drawing on our experience in a graduate-level Inter-net Measurements course, we propose a concrete shift: assess the learning experience made, not the artifact produced.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Short Paper</span>
+      <div class="paper-title">Teaching Networking in the Age of Generative AI: An Experience Report on Teaching Socket Programming</div>
+      <div class="paper-authors">Daniel Fokum <span class="affil">(The University of the West Indies, Mona)</span>, Amit Ramkissoon <span class="affil">(The University of the West Indies, Mona)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper27.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">The widespread availability of generative AI tools requires a re-thinking of various aspects of Computer Science education. In the particular area of computer networking, there are questions on how introduction to networking courses are structured, whether one should be teaching socket programming, or whether the structure of homework should be changed. In this paper we focus on the teaching of socket programming and show how grades have evolved in a socket programming project for an undergraduate computer networking course. We provide some suggestions on how to improve assessment of computer networking projects in, what we believe is, a scalable manner.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Short Paper</span>
+      <div class="paper-title">The Assessment Gap: Why Every Undergraduate Networking Course Needs to Change in the Age of Generative AI</div>
+      <div class="paper-authors">Ranysha Ware <span class="affil">(Swarthmore College)</span>, Vasanta Chaganti <span class="affil">(Swarthmore College)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper32.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Generative AI (GenAI) tools can now solve the programming assignments across most undergraduate computer networking courses, yet the dominant institutional response remains a ban on using AI. We argue that bans are neither enforceable nor pedagogically sound in this context, and that the networking education community must treat GenAI’s arrival as a call to revisit what we assess and why. We document the current landscape of lab-weight distributions and AI policies and we then propose a interventions—ranging in scope from shifting the weight of proctored assessments to redesigning labs around process, reasoning, and AI-scaffold use—that instructors can adopt incrementally. Networking’s position as a largely elective upper-level course, with no canonical downstream dependency, makes it an ideal laboratory for the curriculum-reform experiments our community urgently needs.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Short Paper</span>
+      <div class="paper-title">The Protocol Overlords</div>
+      <div class="paper-authors">Jon Crowcroft <span class="affil">(University of Cambridge)</span>, Andrew Moore <span class="affil">(University of Cambridge)</span>, Richard Mortier <span class="affil">(University of Cambridge)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper1.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">We re-imagine a 1980s protocol implementantion Masters level course for the vibe coding age. The mix of tooling for the course covers quite a range of different capabilities.</div>
+      </details>
+    </li>
+    <li class="paper-card">
+      <span class="paper-tag">Short Paper</span>
+      <div class="paper-title">Toward Place-Based, Human-Centered Networking Education</div>
+      <div class="paper-authors">Beatriz Palacios Abad <span class="affil">(University of New Mexico)</span></div>
+      <div class="paper-links">
+        <a class="paper-link" href="papers/a4ne26-paper29.pdf" target="_blank" rel="noopener">PDF</a>
+        <a class="paper-link" href="#" target="_blank" rel="noopener">Artifacts</a>
+      </div>
+      <details class="paper-abstract">
+        <summary>Abstract</summary>
+        <div class="paper-abstract-body">Traditional networking courses focus on the protocol stack and rarely make space to address the humans, communities, and places that infrastructure serves. In this position paper, I present the redesign of CS 485/585: Computer Networks at the University of New Mexico (UNM), a core elective reorganized around place-based and human-centered principles. Grounded in New Mexico's distinctive broadband landscape, including rural connectivity gaps, tribal infrastructure, and active state policy efforts, the course asks students to connect core networking concepts to real, local lived experiences. Drawing on prior experience teaching discussion-based seminars on technology and society, and on a teaching fellowship in place-based pedagogy, I describe a course designed to prepare students for the sociotechnical realities of the networks they will build and inhabit. The course launches Fall 2026; this paper shares its design ahead of that launch, invites community feedback, and sketches open questions toward a nascent methodology for place-based, human-centered networking education.</div>
+      </details>
+    </li>
+  </ul>
+</section>
+
+<footer>
+  <p>Built in collaboration with <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>.</p>
+</footer>
+
+</body>
+</html>
