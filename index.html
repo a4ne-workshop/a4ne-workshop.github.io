@@ -156,6 +156,38 @@
       color: #c8d8f0;
     }
     .hero-meta strong { color: #fff; font-weight: 600; }
+    .hero-cta {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero-btn {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      padding: 0.7rem 1.6rem;
+      border-radius: 4px;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .hero-btn:hover,
+    .hero-btn:focus-visible {
+      transform: translateY(-1px);
+      background: #f2d34a;
+    }
+    .hero-btn.secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .hero-btn.secondary:hover,
+    .hero-btn.secondary:focus-visible {
+      background: rgba(255,255,255,0.1);
+    }
 
     /* ── SECTIONS ── */
     section {
@@ -475,6 +507,7 @@
       <li><a href="#registration">Registration</a></li>
       <li><a href="#cfp">Call for Papers</a></li>
       <li><a href="papers.html">Papers</a></li>
+      <li><a href="schedule.html">Schedule</a></li>
       <li><a href="#committee">Committee</a></li>
       <li><a href="#organizers">Organizers</a></li>
     </ul>
@@ -491,6 +524,10 @@
       <div><strong>August 17, 2026</strong><br>Full-Day, Hybrid</div>
       <div><strong>Co-located with</strong><br>ACM SIGCOMM 2026</div>
       <div><strong>Format</strong><br>In-Person + Virtual</div>
+    </div>
+    <div class="hero-cta">
+      <a class="hero-btn" href="schedule.html">View Schedule</a>
+      <a class="hero-btn secondary" href="papers.html">Accepted Papers</a>
     </div>
   </div>
 </header>

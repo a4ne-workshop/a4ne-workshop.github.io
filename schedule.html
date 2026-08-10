@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule — SIGCOMM Education Workshop 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f172a; --paper: #ffffff; --accent: #6610f2; --accent-light: #e6c229;
+      --accent-red: #d11149; --muted: #475569; --border: #e2e8f0; --card-bg: #f8fafc;
+      --highlight: #fef9ed; --section-alt: #f1f5f9;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 133%; }
+    body { font-family: 'Source Sans 3', sans-serif; color: var(--ink); background: var(--paper); line-height: 1.7; font-size: 28px; font-weight: 400; -webkit-font-smoothing: antialiased; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: var(--ink); border-bottom: 3px solid var(--accent); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; }
+    .nav-brand { font-family: 'DM Serif Display', serif; color: #fff; font-size: 1.2rem; padding: 0.85rem 0; text-decoration: none; letter-spacing: 0.5px; }
+    .nav-brand span { color: var(--accent-light); }
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-links a { color: #d4d4d4; text-decoration: none; font-size: 0.92rem; font-weight: 500; padding: 0.5rem 0.7rem; border-radius: 4px; transition: color 0.2s, background 0.2s; text-transform: uppercase; letter-spacing: 0.6px; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: #fff; background: rgba(255,255,255,0.12); outline: 2px solid var(--accent-light); outline-offset: 2px; }
+    .nav-links a.active { color: var(--accent-light); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: #fff; margin: 5px 0; transition: 0.3s; }
+
+    .hero { background: var(--ink); color: #fff; padding: 4rem 1.5rem 3.5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 80%, rgba(102,16,242,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(230,194,41,0.15) 0%, transparent 50%); }
+    .hero-content { position: relative; max-width: 960px; margin: 0 auto; }
+    .hero-label { display: inline-block; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2.5px; color: var(--accent-light); margin-bottom: 1rem; border: 1px solid rgba(230,194,41,0.6); padding: 0.35rem 1rem; border-radius: 2px; }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 6.7vw, 3.2rem); line-height: 1.2; font-weight: 400; margin-bottom: 1rem; }
+    .hero h1 em { font-style: normal; color: var(--accent-light); }
+    .hero-sub { font-size: 1.2rem; color: #c4cfe8; font-weight: 700; max-width: 740px; margin: 0 auto; }
+
+    section { padding: 3.5rem clamp(1.5rem, 5vw, 4rem); max-width: 1280px; margin: 0 auto; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 0.35rem; color: var(--ink); position: relative; display: inline-block; }
+    .section-title::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 40px; height: 3px; background: var(--accent); border-radius: 2px; }
+    .section-lead { color: var(--muted); margin-top: 0.75rem; margin-bottom: 1.75rem; font-size: 1.1rem; max-width: 800px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+    /* ── SCHEDULE ── */
+    .schedule { margin-top: 1.5rem; display: grid; gap: 0.75rem; }
+    .sched-row { display: grid; grid-template-columns: 160px 1fr; gap: 1.5rem; align-items: start; padding: 1.1rem 1.35rem; border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); }
+    .sched-row.is-session { border-left: 4px solid var(--accent); }
+    .sched-row.is-break { background: transparent; border-style: dashed; }
+    .sched-time { font-weight: 700; color: var(--accent); font-size: 0.95rem; white-space: nowrap; padding-top: 0.15rem; }
+    .sched-row.is-break .sched-time { color: var(--muted); }
+    .sched-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; line-height: 1.3; }
+    .sched-row.is-break .sched-title { font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 1rem; color: var(--muted); }
+    .sched-sub { font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--muted); }
+    .sched-papers { list-style: none; margin-top: 0.9rem; padding: 0; display: grid; gap: 0.55rem; }
+    .sched-papers li { position: relative; padding-left: 1.1rem; }
+    .sched-papers li::before { content: ''; position: absolute; left: 0; top: 0.62rem; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    .sched-paper-title { line-height: 1.35; }
+    .sched-paper-title a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 1rem; }
+    .sched-paper-title a:hover, .sched-paper-title a:focus-visible { color: var(--accent); text-decoration: underline; }
+    .sched-paper-authors { color: var(--muted); font-size: 0.9rem; }
+
+    footer { background: var(--ink); color: #94a3c8; text-align: center; padding: 2rem 1.5rem; font-size: 0.95rem; }
+    footer a { color: var(--accent-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--ink); padding: 0.5rem 1rem 1rem; border-bottom: 3px solid var(--accent); }
+      .nav-toggle { display: block; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      section { padding: 2.5rem 1.25rem; }
+      .sched-row { grid-template-columns: 1fr; gap: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand"><span>A4NE</span> @ SIGCOMM '26</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html#motivation">Overview</a></li>
+      <li><a href="index.html#dates">Dates</a></li>
+      <li><a href="index.html#registration">Registration</a></li>
+      <li><a href="index.html#cfp">Call for Papers</a></li>
+      <li><a href="papers.html">Papers</a></li>
+      <li><a href="schedule.html" class="active">Schedule</a></li>
+      <li><a href="index.html#committee">Committee</a></li>
+      <li><a href="index.html#organizers">Organizers</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-label">SIGCOMM Education Workshop 2026</div>
+    <h1>Workshop <em>Schedule</em></h1>
+    <p class="hero-sub">A full-day, hybrid program — August 17, 2026, co-located with ACM SIGCOMM 2026.</p>
+  </div>
+</header>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <h2 class="section-title">Program</h2>
+  <p class="section-lead">All times are Mountain Daylight Time (MDT) &mdash; Denver, Colorado. Sessions 1 and 2 are themed panel discussions; the papers in each panel are linked below.</p>
+  <div class="schedule">
+    <div class="sched-row is-break">
+      <div class="sched-time">8:30 – 8:45 AM</div>
+      <div class="sched-body">
+        <div class="sched-title">Welcome</div>
+      </div>
+    </div>
+    <div class="sched-row is-session">
+      <div class="sched-time">8:45 – 10:15 AM</div>
+      <div class="sched-body">
+        <div class="sched-title">Session 1 — AI <span class="sched-sub">(Panel Discussion)</span></div>
+        <ul class="sched-papers">
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper4.pdf" target="_blank" rel="noopener">Agentic AI for Accessibility Remediation in Learning Management Systems</a></div>
+            <div class="sched-paper-authors">Ali Mazloum, Jose Gomez, Elie Kfoury, Jorge Crichigno</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper5.pdf" target="_blank" rel="noopener">An Agentic AI Approach for Hands-on Networking Education</a></div>
+            <div class="sched-paper-authors">Akhil Gorthi Bala Sai, Ali Mazloum, Jose Gomez, Samia Choueiri, Amith GSPN, Elie Kfoury, Jorge Crichigno</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper6.pdf" target="_blank" rel="noopener">An AI Orchestrator Model for Troubleshooting Skills Training in Network Engineering</a></div>
+            <div class="sched-paper-authors">Kapil Mehta, Prashant Sumanprasad Bhadoria, Jaypal Baviskar</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper8.pdf" target="_blank" rel="noopener">Crawl, Walk, Run: A Scaffolded Framework for AI Integration in Computing Education</a></div>
+            <div class="sched-paper-authors">Ramakrishnan Durairajan</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper13.pdf" target="_blank" rel="noopener">From Protocols-to-Prompts (P2P): Mapping the Agentification of Open Networking Education</a></div>
+            <div class="sched-paper-authors">Venkat Sai Suman Lamba Karanam, Zahmeeth Sakkaff, Shubham Sundriyal</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper23.pdf" target="_blank" rel="noopener">Grade the Learning, Not the Implementation: AI-Aware Assessment in Internet Measurements Education</a></div>
+            <div class="sched-paper-authors">Oliver Hohlfeld</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper14.pdf" target="_blank" rel="noopener">Ludwig: Autonomous Multilingual Synthesis of Correct, Engaging Explainer Videos</a></div>
+            <div class="sched-paper-authors">Alexander Krentsel</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper24.pdf" target="_blank" rel="noopener">Teaching Networking in the Age of Generative AI: An Experience Report on Teaching Socket Programming</a></div>
+            <div class="sched-paper-authors">Daniel Fokum, Amit Ramkissoon</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper25.pdf" target="_blank" rel="noopener">The Assessment Gap: Why Every Undergraduate Networking Course Needs to Change in the Age of Generative AI</a></div>
+            <div class="sched-paper-authors">Ranysha Ware, Vasanta Chaganti</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper26.pdf" target="_blank" rel="noopener">The Protocol Overlords</a></div>
+            <div class="sched-paper-authors">Jon Crowcroft, Andrew Moore, Richard Mortier</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper19.pdf" target="_blank" rel="noopener">Think First, Code Later: Enhancing Student Reasoning and Learning in Practical Engineering Education through Guided Generative AI</a></div>
+            <div class="sched-paper-authors">Musab Ahmed, Koojana Kuladinithi, Aliyu Makama, Frank Laue, Jonas Bozenhard, Maximilian Kiener, Andreas Timm-Giel</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper20.pdf" target="_blank" rel="noopener">Transport It Your Way: Rethinking Networking Projects to Emphasize Design</a></div>
+            <div class="sched-paper-authors">Alexander Krentsel, Tess Despres, Sylvia Ratnasamy</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper21.pdf" target="_blank" rel="noopener">Trust, but Verify: AI Interventions in Computer Networking Education</a></div>
+            <div class="sched-paper-authors">Tanya Shreedhar, Christoph Lofi</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="sched-row is-break">
+      <div class="sched-time">10:15 – 10:45 AM</div>
+      <div class="sched-body">
+        <div class="sched-title">Coffee Break</div>
+      </div>
+    </div>
+    <div class="sched-row is-session">
+      <div class="sched-time">10:45 AM – 12:15 PM</div>
+      <div class="sched-body">
+        <div class="sched-title">Session 2 — Curriculum <span class="sched-sub">(Panel Discussion)</span></div>
+        <ul class="sched-papers">
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper1.pdf" target="_blank" rel="noopener">A course on responsible digital developments: a teaching experience report</a></div>
+            <div class="sched-paper-authors">Daphne TUNCER</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper2.pdf" target="_blank" rel="noopener">A First-Principles Framework for Networking Education</a></div>
+            <div class="sched-paper-authors">Jaber Daneshamooz, Sanjay Chandrasekaran, Arpit Gupta</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper3.pdf" target="_blank" rel="noopener">A Lightweight JupyterHub Testbed on k3s for AI and Networking Education in Low-Resource settings: Experience from Senegal</a></div>
+            <div class="sched-paper-authors">Faly GAYE, Bamba GUEYE, Ibrahima DIANE, Damien SAUCEZ, Nikos Makris</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper7.pdf" target="_blank" rel="noopener">Bringing Research Infrastructure into the Networking Classroom at a Public Teaching College</a></div>
+            <div class="sched-paper-authors">Ilknur Aydin, Fraida Fund</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper22.pdf" target="_blank" rel="noopener">Educating The Next Generation of Reviewers</a></div>
+            <div class="sched-paper-authors">Bruce Davie, Matthew Caesar</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper9.pdf" target="_blank" rel="noopener">Exploring Digital Twin Classroom: Extended Reality for Immersive Learning</a></div>
+            <div class="sched-paper-authors">Chaowei Wang, Yunze Zhang, Wenyuan Wang, Lexi Xu, Fan Jiang</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper10.pdf" target="_blank" rel="noopener">Flipped Team-Based Learning and Labs for a Course on Computer Networking</a></div>
+            <div class="sched-paper-authors">Thomas Zinner, Katrien De Moor, Stanislav Lange, David Palma, Trond Vatten</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper11.pdf" target="_blank" rel="noopener">Forty Years of Teaching Computer Networks: A Retrospective</a></div>
+            <div class="sched-paper-authors">Shivendra Panwar, Fraida Fund</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper12.pdf" target="_blank" rel="noopener">From Module Consumers to Module Producers: A Mentored Summer Cohort for AI-Generation, Data-Driven Cybersecurity Education</a></div>
+            <div class="sched-paper-authors">kc Claffy, Ricky K. P. Mok, Alexander Marder, Bradley Huffaker, Rocky K. C. Chang</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper15.pdf" target="_blank" rel="noopener">Networking Unplugged: Hands-On, Inquiry-Based Learning for Undergraduate Networking Courses</a></div>
+            <div class="sched-paper-authors">Aaron Gember-Jacobson</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper16.pdf" target="_blank" rel="noopener">Open Source Networking Textbooks: A Clean Slate</a></div>
+            <div class="sched-paper-authors">Bruce Davie, Larry Peterson</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper17.pdf" target="_blank" rel="noopener">Teaching Computer Networks by Building Networks: An Experiential Learning Approach Using Docker</a></div>
+            <div class="sched-paper-authors">Ram Rustagi</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper18.pdf" target="_blank" rel="noopener">Teaching Wireless Networking in the Age of Software-ization and AI</a></div>
+            <div class="sched-paper-authors">Serge Fdida, James Kurose, Akihiro NAKAO, Larry Peterson</div>
+          </li>
+          <li>
+            <div class="sched-paper-title"><a href="papers/a4ne26-paper27.pdf" target="_blank" rel="noopener">Toward Place-Based, Human-Centered Networking Education</a></div>
+            <div class="sched-paper-authors">Beatriz Palacios Abad</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="sched-row is-break">
+      <div class="sched-time">12:15 – 1:15 PM</div>
+      <div class="sched-body">
+        <div class="sched-title">Lunch</div>
+      </div>
+    </div>
+    <div class="sched-row is-session">
+      <div class="sched-time">1:15 – 2:45 PM</div>
+      <div class="sched-body">
+        <div class="sched-title">Session 3 — Open Mic: What&rsquo;s on your mind? What are you doing in your courses?</div>
+      </div>
+    </div>
+    <div class="sched-row is-break">
+      <div class="sched-time">2:45 – 3:15 PM</div>
+      <div class="sched-body">
+        <div class="sched-title">Coffee Break</div>
+      </div>
+    </div>
+    <div class="sched-row is-session">
+      <div class="sched-time">3:15 – 4:45 PM</div>
+      <div class="sched-body">
+        <div class="sched-title">Session 4 — Birds of a Feather Break-Out Sessions</div>
+      </div>
+    </div>
+    <div class="sched-row is-break">
+      <div class="sched-time">4:45 – 5:00 PM</div>
+      <div class="sched-body">
+        <div class="sched-title">Closing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built in collaboration with <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>.</p>
+</footer>
+
+</body>
+</html>
